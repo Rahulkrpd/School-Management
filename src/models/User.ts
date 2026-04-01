@@ -33,4 +33,12 @@ const schema = new Schema<IUser>({
 
 }, { timestamps: true })
 
+schema.index(
+    {role:1},
+    {
+        unique:true,
+        partialFilterExpression:{role:"principal"}
+    }
+);
+
 export default mongoose.models.User || mongoose.model("User", schema);
