@@ -9,6 +9,13 @@ export async function POST(req: NextRequest) {
 
         const { username, email, password, role } = await req.json();
 
+        if (!username || !email || !password || !role) {
+            return NextResponse.json(
+                { error: "Missing required fields" },
+                { status: 400 }
+            );
+        }
+
         const hashed = await hashPassword(password);
 
         const user = await User.create({
@@ -22,9 +29,12 @@ export async function POST(req: NextRequest) {
             success: true,
             user,
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message =
+            error instanceof Error ? error.message : "An unknown error occurred";
+
         return NextResponse.json(
-            { error: error.message },
+            { error: message },
             { status: 400 }
         );
     }

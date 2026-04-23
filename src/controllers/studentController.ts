@@ -1,12 +1,25 @@
 import User from "@/models/User";
 import Student from "@/models/Student";
 import { generateStudentRoll } from "@/lib/idGenerator";
+import { hashPassword } from "@/lib/hash";
 
-export const createStudent = async (data: any) => {
+interface CreateStudentData {
+    username: string;
+    email: string;
+    password: string;
+    classId: string;
+}
+
+
+
+
+
+export const createStudent = async (data: CreateStudentData) => {
+    const hashed = await hashPassword(data.password);
     const user = await User.create({
         username: data.username,
         email: data.email,
-        password: data.password,
+        password: hashed,
         role: "student",
     });
 

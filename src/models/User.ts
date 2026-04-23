@@ -1,4 +1,4 @@
-import mongoose , { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 
 export interface IUser extends Document {
@@ -14,16 +14,19 @@ const schema = new Schema<IUser>({
         type: String,
         required: true,
         unique: true,
+        trim: true,
     },
     email: {
         type: String,
         required: true,
         unique: true,
+        trim: true,
 
     },
     password: {
         type: String,
         required: true,
+        trim: true,
     },
     role: {
         type: String,
@@ -34,10 +37,10 @@ const schema = new Schema<IUser>({
 }, { timestamps: true })
 
 schema.index(
-    {role:1},
+    { role: 1 },
     {
-        unique:true,
-        partialFilterExpression:{role:"principal"}
+        unique: true,
+        partialFilterExpression: { role: "principal" }
     }
 );
 

@@ -5,6 +5,8 @@ export interface IMarks extends Document {
     subjectId: mongoose.Types.ObjectId;
     exam: string;
     marks: number;
+    classId: mongoose.Types.ObjectId,
+    
 }
 
 const schema = new Schema<IMarks>(
@@ -13,6 +15,7 @@ const schema = new Schema<IMarks>(
         subjectId: { type: Schema.Types.ObjectId, ref: "Subject", required: true },
         exam: { type: String, required: true },
         marks: { type: Number, min: 0, max: 100, required: true },
+        classId: { type: Schema.ObjectId, ref: "Class" }
     },
     { timestamps: true }
 );

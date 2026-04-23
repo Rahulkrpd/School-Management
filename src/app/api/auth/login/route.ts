@@ -10,6 +10,13 @@ export async function POST(req: NextRequest) {
 
         const { email, password } = await req.json();
 
+        if (!email || !password) {
+            return NextResponse.json(
+                { error: "Missiging required fileds " },
+                { status: 400 }
+            )
+        }
+
         const user = await User.findOne({ email });
 
         if (!user) {
@@ -51,10 +58,13 @@ export async function POST(req: NextRequest) {
         });
 
         return response;
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message =
+            error instanceof Error ? error.message : "An unknown error occurred";
+
         return NextResponse.json(
-            { error: error.message },
-            { status: 500 }
+            { error: message },
+            { status: 400 }
         );
     }
 }

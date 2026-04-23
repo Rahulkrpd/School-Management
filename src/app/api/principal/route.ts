@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
-import { createPrincipal } from "@/controllers/principalController";
+import { replacePrincipal } from "@/controllers/principalController";
 
 export async function POST(req: NextRequest) {
     try {
@@ -8,15 +8,18 @@ export async function POST(req: NextRequest) {
 
         const body = await req.json();
 
-        const principal = await createPrincipal(body);
+        const principal = await replacePrincipal(body);
 
         return NextResponse.json({
             success: true,
             principal,
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message =
+            error instanceof Error ? error.message : "An unknown error occurred";
+
         return NextResponse.json(
-            { error: error.message },
+            { error: message },
             { status: 400 }
         );
     }
