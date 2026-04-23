@@ -30,18 +30,12 @@ const schema = new Schema<IUser>({
     },
     role: {
         type: String,
-        enum: ["principal", "teacher", "student"],
+        enum: ["principal", "teacher", "student","admin"],
         required: true
     }
 
 }, { timestamps: true })
 
-schema.index(
-    { role: 1 },
-    {
-        unique: true,
-        partialFilterExpression: { role: "principal" }
-    }
-);
+
 
 export default mongoose.models.User || mongoose.model("User", schema);

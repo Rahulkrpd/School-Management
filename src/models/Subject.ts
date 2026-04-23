@@ -10,7 +10,7 @@ const schema = new Schema<ISubject>(
     {
         name: { type: String, required: true },
         classId: { type: Schema.Types.ObjectId, ref: "Class", required: true },
-        teacherId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        teacherId: { type: Schema.Types.ObjectId, ref: "Teacher", required: true },
     },
     { timestamps: true }
 );

@@ -13,4 +13,12 @@ const schema = new Schema<ITeacher>(
     { timestamps: true }
 );
 
+schema.pre("save", async function () {
+    const user = await mongoose.model("User").findById(this.userId);
+
+    if (!user || user.role !== "teacher") {
+        throw new Error("User must have role 'teacher'");
+    }
+});
+
 export default mongoose.models.Teacher || mongoose.model("Teacher", schema);
