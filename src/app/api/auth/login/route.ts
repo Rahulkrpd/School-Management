@@ -43,11 +43,12 @@ export async function POST(req: NextRequest) {
         const response = NextResponse.json({
             success: true,
             token,
-            user: {
-                id: user._id,
-                username: user.username,
-                role: user.role,
-            },
+            // user: {
+            //     id: user._id,
+            //     username: user.username,
+            //     role: user.role,
+            // },
+            user,
         });
 
         // store token in cookie (recommended)
